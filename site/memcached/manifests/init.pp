@@ -1,6 +1,7 @@
 class memcached {
-  package { 'memcached' }
-    ensure => present
+  package { 'memcached':
+    ensure => present,
+    before => File['memcached'],
   }
 
   file { 'memcached':
@@ -9,6 +10,7 @@ class memcached {
     owner => 'root',
     group => 'root',
     source => 'puppet:///modules/memcached/memcached',
+    notify => Service['memcached'],
   }
 
   service { 'memcached':
