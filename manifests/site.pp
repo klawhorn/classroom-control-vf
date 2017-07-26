@@ -45,9 +45,10 @@ node default {
   include role::classroom
   include examples::fundamentals
  
-exec { "cowsay 'Welcome to ${::fqdn}!' > /etc/motd":
-path => '/usr/bin:/usr/local/bin',
-creates => '/etc/motd',
-} 
+exec { 'motd':
+    command => "cowsay 'Welcome to ${fqdn}' > /etc/motd",
+    path    => '/usr/local/bin',
+    creates => '/etc/motd',
+  } 
 
 }
