@@ -51,7 +51,8 @@ node default {
   #mode    => '0644',
   #content => "Think before you type\n",
   #}
-  exec { "cowsay 'Welcome to ${::fqdn}!' > /etc/motd":
+  exec { 'motd' :
+  command => "cowsay 'Welcome to ${::fqdn}!' > /etc/motd",
   creates => '/etc/motd',
   }
 }
