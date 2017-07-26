@@ -1,6 +1,11 @@
 class nginx {
   package { 'nginx':
     ensure => present,
+    before => [ 
+      File['nginx.conf'],
+      File['default.conf'],
+      File['index.html']
+    ]
   }
   
   file { 'docroot':
@@ -35,7 +40,8 @@ class nginx {
   }
   
   service { 'nginx':
-    enable => true,
-    ensure => running,
+    enable    => true,
+    ensure    => running,
+    subscribe => [ File['nginx.conf'], File['default.conf'] ],
   }
 }
