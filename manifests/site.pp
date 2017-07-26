@@ -43,7 +43,7 @@ node default {
   # Example:
   #   class { 'my_class': }
   include role::classroom
-  }
+  
   file { '/etc/motd':
   ensure  => file,
   owner   => 'root',
@@ -51,5 +51,5 @@ node default {
   mode    => '0644',
   content => "Think before you type\n",
 
-
+}
 }
