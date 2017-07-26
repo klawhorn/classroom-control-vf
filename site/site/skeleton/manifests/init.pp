@@ -8,7 +8,7 @@ class skeleton {
   file { 'bashrc':
    ensure => file,
    path => 'etc/skel/.bashrc',
-   source => 'puppett://modules/skeleton/bashrc',
+   source => 'puppet://modules/skeleton/bashrc',
   }
 
 }
