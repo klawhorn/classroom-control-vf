@@ -1,5 +1,9 @@
 class nginx {
 
+  $docroot = '/var/www'
+  $confdir = '/etc/nginx'
+  $uri = 'puppet:///modules/nginx'
+
   File {
     ensure => file,
     owner => 'root',
@@ -15,27 +19,26 @@ class nginx {
     ]
   }
 
-  file { 'docroot':
+  file { $docroot :
     ensure => directory,
-    path   => '/var/www',
   }
   
-  file { 'index.html':
-    path   => '/var/www/index.html',
-    source => 'puppet:///modules/nginx/index.html',
+  file { 'index.html' :
+    path   => '${docroot}index.html',
+    source => '${uri}/index.html',
   }
   
-  file { 'nginx.conf':
-    path   => '/etc/nginx/nginx.conf',
-    source => 'puppet:///modules/nginx/nginx.conf',
+  file { 'nginx.conf' :
+    path   => '${confdir}/nginx.conf',
+    source => '${uri}/nginx.conf',
   }
   
-  file { 'default.conf':
-    path   => '/etc/nginx/conf.d/default.conf',
-    source => 'puppet:///modules/nginx/default.conf',
+  file { 'default.conf' :
+    path   => '${confdir}/conf.d/default.conf',
+    source => '${uri}/default.conf',
   }
   
-  service { 'nginx':
+  service { 'nginx' :
     enable    => true,
     ensure    => running,
     subscribe => [ File['nginx.conf'], File['default.conf'] ],
