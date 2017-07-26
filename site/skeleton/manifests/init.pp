@@ -5,9 +5,9 @@ file {'/etc/skel':
    group => 'root',
 }
 
-file {batchrc':
+file {'batchrc':
 ensure => file,
-path => 'etc/skel/.bashrc',
+path => '/etc/skel/.bashrc',
 owner =>'root',
 group => 'root',
 source => 'puppet:///modules/skeleton/
