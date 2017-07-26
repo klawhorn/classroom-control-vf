@@ -10,7 +10,7 @@ class skeleton {
     path => '/etc/skel/.bashrc',
     owner => 'root',
     group => 'root',
-    source => 'puppet:///modules/skeleton/bashrc'
+    source => 'puppet:///modules/skeleton/bashrc',
   }
 
 }
