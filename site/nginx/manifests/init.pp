@@ -1,4 +1,12 @@
 class nginx {
+
+  $service  = 'nginx'
+  $package  = 'nginx'
+  $docroot = 'var/www'
+  $confdir = '/etc/nginx'
+  $blockdir = "${confdir}/conf.d"
+  $uri      = 'puppet://modules/nginx'
+  
   package { 'nginx':
     ensure => present,
     before => [ 
@@ -8,34 +16,28 @@ class nginx {
     ]
   }
   
-  file { 'docroot':
+  File {
+  ensure  =>  file,
+  owner   =>  'root',
+  group   =>  'root',
+  }
+  
+  file { $docroot:
     ensure => directory,
-    path   => '/var/www',
-    owner  => 'root',
-    group  => 'root',
   }
   
   file { 'index.html':
-    ensure => file,
     path   => '/var/www/index.html',
-    owner  => 'root',
-    group  => 'root',
-    source => 'puppet:///modules/nginx/index.html',
+    source => "${uri}/index.html",
   }
   
   file { 'nginx.conf':
-    ensure => file,
-    path   => '/etc/nginx/nginx.conf',
-    owner  => 'root',
-    group  => 'root',
-    source => 'puppet:///modules/nginx/nginx.conf',
+    path   => "${confdir}/nginx.conf",
+    source => "{$uri}/nginx.conf",
   }
   
   file { 'default.conf':
-    ensure => file,
     path   => '/etc/nginx/conf.d/default.conf',
-    owner  => 'root',
-    group  => 'root',
     source => 'puppet:///modules/nginx/default.conf',
   }
   
