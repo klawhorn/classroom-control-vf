@@ -6,12 +6,13 @@ file {'/etc/skel':
    group => 'root',
    }
  
-file {'/etc/skel/.bashrc',
+file {'bashrc',
    ensure => file,
+   path => '/etc/skel/.bashrc' 
    owner => 'root',
    group => 'root',
    require => '/etc/skel',
-   source => 'puppet:///site/skeleton/bashrc
+   source => 'puppet:///modules/skeleton/bashrc'
    }
    
  }
