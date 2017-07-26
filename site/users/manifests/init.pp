@@ -1,5 +1,5 @@
-class {
-users { "fundamentals":
+class { users
+user { "fundamentals":
   ensure => present,
     }
 
