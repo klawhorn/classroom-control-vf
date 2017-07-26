@@ -44,4 +44,12 @@ node default {
   #   class { 'my_class': }
   include role::classroom
   include examples::fundamentals
+  
+  file { '/etc/motd':
+  ensure  => file,
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0644',
+  content => "Think before you type\n",
+}
 }
