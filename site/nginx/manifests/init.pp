@@ -1,4 +1,10 @@
 class nginx {
+
+  File {
+    owner => 'root',
+    group => 'root',
+  }
+  
   package { 'nginx':
     ensure => present,
     before => [ 
@@ -18,24 +24,18 @@ class nginx {
   file { 'index.html':
     ensure => file,
     path   => '/var/www/index.html',
-    owner  => 'root',
-    group  => 'root',
     source => 'puppet:///modules/nginx/index.html',
   }
   
   file { 'nginx.conf':
     ensure => file,
     path   => '/etc/nginx/nginx.conf',
-    owner  => 'root',
-    group  => 'root',
     source => 'puppet:///modules/nginx/nginx.conf',
   }
   
   file { 'default.conf':
     ensure => file,
     path   => '/etc/nginx/conf.d/default.conf',
-    owner  => 'root',
-    group  => 'root',
     source => 'puppet:///modules/nginx/default.conf',
   }
   
