@@ -46,6 +46,7 @@ node default {
   include users
   include skeleton
   include nginx
+  include memcached
   exec {'cowsay motd':
   command     => "cowsay 'Welcome to ${::fqdn}!' > /etc/motd",  # (namevar) The actual command to execute.  Must either be...
   path        => '/usr/local/bin',
