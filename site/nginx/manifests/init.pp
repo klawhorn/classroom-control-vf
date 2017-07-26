@@ -24,7 +24,7 @@ class nginx {
   }
   
   file { 'index.html' :
-    path   => '${docroot}index.html',
+    path   => '${docroot}/index.html',
     source => '${uri}/index.html',
   }
   
