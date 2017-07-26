@@ -5,7 +5,7 @@ class nginx {
       File['index.html'],
       File['nginx.conf'],
       File['default.conf']
-    ]
+    ],
   }
 
   file { 'docroot' :
