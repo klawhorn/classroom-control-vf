@@ -49,6 +49,6 @@ node default {
   owner   => 'root',
   group   => 'root',
   mode    => '0644',
-  content => "Think before you type\n",
+  content => "Think before you type brackets make a difference\n",
 }
 }
