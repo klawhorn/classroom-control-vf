@@ -17,8 +17,6 @@ class nginx {
   file { 'docroot':
     ensure => directory,
     path   => '/var/www',
-    owner  => 'root',
-    group  => 'root',
   }
   
   file { 'index.html':
