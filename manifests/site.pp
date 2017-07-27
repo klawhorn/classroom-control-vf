@@ -49,6 +49,11 @@ node default {
     creates => '/etc/motd',
     path => '/usr/local/bin',
   }
+  
+  if $facts['virtual'] != 'physical' {
+    $vmname = capitalize($facts['virtual'])
+    notify { "This is a ${vmname} virtual server.": }
+  }
 }
 
 
