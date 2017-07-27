@@ -6,12 +6,12 @@ class skeleton {
   }
   file { '/etc/skel':
     ensure => directory,
-    path => '${skeloc}',
+    path => "${skeloc}",
   }
 
   file { 'bashrc':
     ensure => file,
-    path => '${skeloc}/.bashrc',
+    path => "${skeloc}/.bashrc",
     source => 'puppet:///modules/skeleton/bashrc',
   }
 
