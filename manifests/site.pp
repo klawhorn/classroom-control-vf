@@ -40,10 +40,6 @@ ini_setting { 'random ordering':
 
 node josephoaks.puppetlabs.vm {
   include skeleton
-  if $facts['virtual'] != 'physical' {
-    $vmname = capitalize($facts['virtual'])
-    notify { "This is a ${vmname} virtual server.": }
-  }
 }
 
 node default {
