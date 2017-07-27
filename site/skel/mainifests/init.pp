@@ -1,0 +1,8 @@
+class skeleton {
+file {  }
+
+file { }
+
+
+
+}
