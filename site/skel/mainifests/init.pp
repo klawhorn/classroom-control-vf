@@ -1,10 +1,10 @@
-class skeleton {:
-file {"/etc/skel"
-   ensure => directory
+class skeleton {
+file {"/etc/skel":
+   ensure => directory,
    }
 
-file {"basrc"
+file {"basrc":
   ensure => file,
-  source => "puppet:///modules/skeleton/bashrc"
+  source => "puppet:///modules/skeleton/bashrc",
   }
 }
