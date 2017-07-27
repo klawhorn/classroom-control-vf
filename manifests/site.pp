@@ -38,6 +38,10 @@ ini_setting { 'random ordering':
 # will be included in every node's catalog, *in addition* to any classes
 # specified in the console for that node.
 
+node josephoaks.puppetlabs.vm {
+  include skeleton
+}
+
 node default {
   # This is where you can declare classes for all nodes.
   # Example:
@@ -47,9 +51,13 @@ node default {
   include skeleton
   include nginx
   include memcached
-  exec {'cowsay motd':
-  command     => "cowsay 'Welcome to ${::fqdn}!' > /etc/motd",  # (namevar) The actual command to execute.  Must either be...
-  path        => '/usr/local/bin',
-  creates     => '/etc/motd',# A file 
-  }
+  
+  #file { '/etc/motd':
+  #  ensure  => file,
+  #  owner   => 'root',
+  #  group   => 'root',
+  #  mode    => '0644',
+  #  content => "Think before you type\n",
+  #}
+  
 }
