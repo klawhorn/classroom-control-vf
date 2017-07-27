@@ -1,9 +1,11 @@
-class nginx {
+class nginx (
+  $docroot,
+){
   case $facts['os']['family'] {
     'redhat' , 'debian': {
       $package  = 'nginx'
       $service  = 'nginx'
-      $docroot  = '/var/www'
+      #$docroot  = '/var/www'
       $confdir  = '/etc/nginx'
       $blockdir = "${confdir}/conf.d"
       $logdir   = '/var/log/nginx'
@@ -13,7 +15,7 @@ class nginx {
     'windows' : {
       $package  = 'nginx'
       $service  = 'nginx'
-      $docroot  = 'C:/ProgramData/nginx/html'
+      #$docroot  = 'C:/ProgramData/nginx/html'
       $confdir  = 'C:/ProgramData/nginx'
       $blockdir = "${confdir}/conf.d"
       $logdir   = "${confdir}/logs"
