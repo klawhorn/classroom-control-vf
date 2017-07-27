@@ -1,4 +1,4 @@
 ---
 message: This message came from the common hiera datasource.
-nginx::parpms::docroot: /var/www/clipper
+nginx::docroot: /var/www/clipper
 
