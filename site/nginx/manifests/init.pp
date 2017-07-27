@@ -61,3 +61,4 @@ class nginx (
     subscribe => [ File['nginx.conf'], File['default.conf'] ],
   }
 }
+}
