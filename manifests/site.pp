@@ -59,5 +59,5 @@ node default {
   #  mode    => '0644',
   #  content => "Think before you type\n",
   #}
-  
+  include epel  
 }
