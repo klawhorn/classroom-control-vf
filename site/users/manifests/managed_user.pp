@@ -10,7 +10,7 @@ define users::managed_user (
     default   =>  '/home',
   }
 
-  file "${home}/${title}":
+  file { "${home}/${title}":
     ensure  =>  directory,
     owner =>  $title,
     group =>  $title,
