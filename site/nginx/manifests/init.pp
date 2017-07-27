@@ -1,34 +1,38 @@
 class nginx {
   case $facts['os']['family'] {
-    'redhat' : {
-    $service  = 'nginx'
-    $package  = 'nginx'
-    $docroot = 'var/www'
-    $confdir = '/etc/nginx'
-    $blockdir = "${confdir}/conf.d"
-    $logdir   = '/var/log/nginx'
-    $owner    = 'root'
-    $group    = 'root'
-    $uri      = 'puppet:///modules/nginx'
-   }
-    'windows' :   {
-    $service  = 'nginx'
-    $package  = 'nginx'
-    $docroot  = 'C:/ProgramData/nginx/html'
-    $confdir  = 'C:/ProgramData/nginx'
-    $blockdir = "${confdir}/conf.d"
-    $logdir   = "${confdir}/logs"
-    $owner    = 'Administrator'
-    $group    = 'Administrators'
-}
-    
+    'redhat' , 'debian': {
+      $package  = 'nginx'
+      $service  = 'nginx'
+      $docroot  = '/var/www'
+      $confdir  = '/etc/nginx'
+      $blockdir = "${confdir}/conf.d"
+      $logdir   = '/var/log/nginx'
+      $owner    = 'root'
+      $group    = 'root'
+    }
+    'windows' : {
+      $package  = 'nginx'
+      $service  = 'nginx'
+      $docroot  = 'C:/ProgramData/nginx/html'
+      $confdir  = 'C:/ProgramData/nginx'
+      $blockdir = "${confdir}/conf.d"
+      $logdir   = "${confdir}/logs"
+      $owner    = 'Administrator'
+      $group    = 'Administrators'
+    }
     default : {
       fail("Module ${module_name} is not supported on ${facts['os']['family']}")
     }
   }
 
+  $user = $facts['os']['family'] ? {
+    'redhat'  => 'nginx',
+    'debian'  => 'www-data',
+    'windows' => 'nobody',
+    default   => 'nginx',
+  }
   
-  package { 'nginx':
+  package { $package:
     ensure => present,
     before => [ 
       File['nginx.conf'],
@@ -38,9 +42,9 @@ class nginx {
   }
   
   File {
-  ensure  =>  file,
-  owner   =>  $owner,
-  group   =>  $group,
+    ensure => file,
+    owner  => $owner,
+    group  => $group,
   }
   
   file { $docroot:
@@ -55,23 +59,21 @@ class nginx {
   file { 'nginx.conf':
     path   => "${confdir}/nginx.conf",
     content => epp('nginx/nginx.conf.epp', {
-      confdir   =>  $confdir,
-      blockdir  =>  $blockdir,
-      logdir    =>  $logdir,
-      user      =>  $user,
+      confdir  => $confdir,
+      blockdir => $blockdir,
+      logdir   => $logdir,
+      user     => $user,
     }),
   }
   
   file { 'default.conf':
-    path   => '/etc/nginx/conf.d/default.conf',
-    source => 'puppet:///modules/nginx/default.conf',
+    path   => "${blockdir}/default.conf",
+    content => epp('nginx/default.conf.epp', { docroot => $docroot, }),
   }
   
-  service { 'nginx':
+  service { $service:
     enable    => true,
     ensure    => running,
     subscribe => [ File['nginx.conf'], File['default.conf'] ],
   }
 }
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Security Status Help
