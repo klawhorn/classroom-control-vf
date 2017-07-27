@@ -64,3 +64,4 @@ node default {
  else { notify {"this is a physical machine"}
  
 }
+}
