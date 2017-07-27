@@ -31,3 +31,4 @@ class nginx::params {
     'windows' => 'nobody',
     default   => 'nginx',
   }
+}
