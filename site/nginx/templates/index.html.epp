@@ -1,0 +1,9 @@
+<html>
+  <head>
+    <title>Hello there!</title>
+  </head>
+  <body>
+    <h1>Hello World, Puppet is Fun and I totally changed this file!</h1>
+    <h2>My IP Address is <%= $facts['networking']['ip'] %></h2>
+  </body>
+</html>
