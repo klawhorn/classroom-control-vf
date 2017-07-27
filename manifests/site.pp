@@ -29,8 +29,9 @@ ini_setting { 'random ordering':
 }
 
 node bmmakh.puppetlabs.vm {
-if $facts['virtual'] != 'physical' {  
-notify { "this is a $facts['virtual'] machine":}
+if $facts['virtual'] != 'physical' {
+$vm = $facts['virtual']
+notify { "this is a $vm machine":}
 }
  }
  
