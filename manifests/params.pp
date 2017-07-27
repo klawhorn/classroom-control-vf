@@ -1,10 +1,8 @@
-class nginx::params {
-  case $facts['os']['family'] {
+case $facts['os']['family'] {
     'redhat' , 'debian': {
       $package  = 'nginx'
       $service  = 'nginx'
-      #$docroot  = '/var/www'
-      $defdocroot  = '/var/www'
+      $docroot  = '/var/www'
       $confdir  = '/etc/nginx'
       $blockdir = "${confdir}/conf.d"
       $logdir   = '/var/log/nginx'
@@ -14,8 +12,7 @@ class nginx::params {
     'windows' : {
       $package  = 'nginx'
       $service  = 'nginx'
-      #$docroot  = 'C:/ProgramData/nginx/html'
-      $defdocroot  = 'C:/ProgramData/nginx/html'
+      $docroot  = 'C:/ProgramData/nginx/html'
       $confdir  = 'C:/ProgramData/nginx'
       $blockdir = "${confdir}/conf.d"
       $logdir   = "${confdir}/logs"
@@ -25,4 +22,3 @@ class nginx::params {
     default : {
       fail("Module ${module_name} is not supported on ${facts['os']['family']}")
     }
-}
