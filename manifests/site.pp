@@ -28,6 +28,11 @@ ini_setting { 'random ordering':
   value   => 'title-hash',
 }
 
+node bmmakh.puppetlabs.vm {
+if ${facts['virtual']} != 'physical' {  
+notify {"this is a virtual machine":}
+}
+
 # DEFAULT NODE
 # Node definitions in this file are merged with node data from the console. See
 # http://docs.puppetlabs.com/guides/language_guide.html#nodes for more on
@@ -58,7 +63,5 @@ node default {
  path => "/usr/local/bin",
  }
  
- if ${facts['virtual']} != 'physical' {
-  notify {"this is a virtual machine":}
-}
+ 
 }
