@@ -4,10 +4,6 @@ class skeleton {
     ensure => 'directory',
   }
 
-  file { 'bashrc':
-    ensure => 'file',
-    path   => '/etc/skel/.bashrc',
-  }
   
   file { 'bashrc':
     ensure => file,
