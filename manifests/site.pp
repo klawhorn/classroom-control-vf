@@ -39,9 +39,7 @@ ini_setting { 'random ordering':
 # specified in the console for that node.
 
 node josephoaks.puppetlabs.vm {
-  class { 'nginx':
-    root => '/var/www/sloop',
-  }
+  
 }
 
 node default {
