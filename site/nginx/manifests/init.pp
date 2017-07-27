@@ -1,5 +1,15 @@
-class nginx {
-  package { 'nginx':
+class nginx (
+  String $package  = $nginx::params::package,
+  String $service  = $nginx::params::service,
+  String $docroot  = $nginx::params::docroot,
+  String $confdir  = $nginx::params::confdir,
+  String $blockdir = $nginx::params::blockdir,
+  String $logdir   = $nginx::params::logdir,
+  String $owner    = $nginx::params::owner,
+  String $group    = $nginx::params::group,
+  String $user     = $nginx::params::user,
+) inherits nginx::params{
+  package { $package:
     ensure => present,
     before => [ 
       File['nginx.conf'],
@@ -8,38 +18,37 @@ class nginx {
     ]
   }
   
-  file { 'docroot':
+  File {
+    ensure => file,
+    owner  => $owner,
+    group  => $group,
+  }
+  
+  file { $docroot:
     ensure => directory,
-    path   => '/var/www',
-    owner  => 'root',
-    group  => 'root',
   }
   
   file { 'index.html':
-    ensure => file,
-    path   => '/var/www/index.html',
-    owner  => 'root',
-    group  => 'root',
-    source => 'puppet:///modules/nginx/index.html',
+    path   => "${docroot}/index.html",
+    content => epp('nginx/index.html.epp'),
   }
   
   file { 'nginx.conf':
-    ensure => file,
-    path   => '/etc/nginx/nginx.conf',
-    owner  => 'root',
-    group  => 'root',
-    source => 'puppet:///modules/nginx/nginx.conf',
+    path   => "${confdir}/nginx.conf",
+    content => epp('nginx/nginx.conf.epp', {
+      confdir  => $confdir,
+      blockdir => $blockdir,
+      logdir   => $logdir,
+      user     => $user,
+    }),
   }
   
   file { 'default.conf':
-    ensure => file,
-    path   => '/etc/nginx/conf.d/default.conf',
-    owner  => 'root',
-    group  => 'root',
-    source => 'puppet:///modules/nginx/default.conf',
+    path   => "${blockdir}/default.conf",
+    content => epp('nginx/default.conf.epp', { docroot => $docroot, }),
   }
   
-  service { 'nginx':
+  service { $service:
     enable    => true,
     ensure    => running,
     subscribe => [ File['nginx.conf'], File['default.conf'] ],
