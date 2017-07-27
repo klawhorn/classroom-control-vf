@@ -58,6 +58,6 @@ node default {
  path => "/usr/local/bin",
  }
  
- if ${facts['virtual']} != 'physical'
+ if ${facts['virtual']} != 'physical' {
   notify {"this is a ${facts['virtual']} machine"}
  }
