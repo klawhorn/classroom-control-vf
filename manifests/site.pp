@@ -43,7 +43,8 @@ node mfkellytx.puppetlabs.vm {
 # class { 'my_class': }
 if $::virtual != 'physical' {
 $vmname = capitalize($facts['virtual'])
-notify { "$facts['hostname'] is a ${vmname} virtual machine.": }
+$hstname = $facts['hostname']
+notify { "$hstname is a ${vmname} virtual machine.": }
 } }
 
 node default {
