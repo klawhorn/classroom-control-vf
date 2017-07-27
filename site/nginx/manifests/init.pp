@@ -8,7 +8,7 @@ class nginx (
       $owner    = nginx::parpms::owner,
       $group    = nginx::parpms::group,
     ) inherits nginx::parmpms    
-    }
+    {
     
   package { $package:
     ensure => present,
