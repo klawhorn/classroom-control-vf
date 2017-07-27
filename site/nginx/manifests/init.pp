@@ -1,11 +1,14 @@
-class nginx {
-  $package  = 'nginx'
-  $service  = 'nginx'
-  $docroot  = '/var/www'
-  $confdir  = '/etc/nginx'
-  $blockdir = "${confdir}/conf.d"
-  $uri      = 'puppet:///modules/nginx'
-  
+class nginx (
+  String $package  = $nginx::params::package,
+  String $service  = $nginx::params::service,
+  String $docroot  = $nginx::params::docroot,
+  String $confdir  = $nginx::params::confdir,
+  String $blockdir = $nginx::params::blockdir,
+  String $logdir   = $nginx::params::logdir,
+  String $owner    = $nginx::params::owner,
+  String $group    = $nginx::params::group,
+  String $user     = $nginx::params::user,
+) inherits nginx::params{
   package { $package:
     ensure => present,
     before => [ 
@@ -17,8 +20,8 @@ class nginx {
   
   File {
     ensure => file,
-    owner  => 'root',
-    group  => 'root',
+    owner  => $owner,
+    group  => $group,
   }
   
   file { $docroot:
@@ -27,17 +30,22 @@ class nginx {
   
   file { 'index.html':
     path   => "${docroot}/index.html",
-    source => "${uri}/index.html",
+    content => epp('nginx/index.html.epp'),
   }
   
   file { 'nginx.conf':
     path   => "${confdir}/nginx.conf",
-    source => "${uri}/nginx.conf",
+    content => epp('nginx/nginx.conf.epp', {
+      confdir  => $confdir,
+      blockdir => $blockdir,
+      logdir   => $logdir,
+      user     => $user,
+    }),
   }
   
   file { 'default.conf':
     path   => "${blockdir}/default.conf",
-    source => "${uri}/default.conf",
+    content => epp('nginx/default.conf.epp', { docroot => $docroot, }),
   }
   
   service { $service:
