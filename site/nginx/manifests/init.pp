@@ -14,7 +14,7 @@ class nginx (
     before => [ 
       File['nginx.conf'],
       File['default.conf'],
-      File['index.html']
+      File['index.html'],
     ]
   }
   
