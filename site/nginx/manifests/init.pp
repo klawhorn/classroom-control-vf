@@ -7,7 +7,7 @@ class nginx (
       $logdir   = nginx::parpms::logdir,
       $owner    = nginx::parpms::owner,
       $group    = nginx::parpms::group,
-    ) inherits nginx::parmpms    
+    ) inherits nginx::parpms    
     {
     
   package { $package:
