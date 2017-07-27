@@ -1,11 +1,32 @@
 class nginx {
+  case $facts['os']['family'] {
+    'redhat' : {
+    $service  = 'nginx'
+    $package  = 'nginx'
+    $docroot = 'var/www'
+    $confdir = '/etc/nginx'
+    $blockdir = "${confdir}/conf.d"
+    $logdir   = '/var/log/nginx'
+    $owner    = 'root'
+    $group    = 'root'
+    $uri      = 'puppet:///modules/nginx'
+   }
+    'windows' :   {
+    $service  = 'nginx'
+    $package  = 'nginx'
+    $docroot  = 'C:/ProgramData/nginx/html'
+    $confdir  = 'C:/ProgramData/nginx'
+    $blockdir = "${confdir}/conf.d"
+    $logdir   = "${confdir}/logs"
+    $owner    = 'Administrator'
+    $group    = 'Administrators'
+}
+    
+    default : {
+      fail("Module ${module_name} is not supported on ${facts['os']['family']}")
+    }
+  }
 
-  $service  = 'nginx'
-  $package  = 'nginx'
-  $docroot = 'var/www'
-  $confdir = '/etc/nginx'
-  $blockdir = "${confdir}/conf.d"
-  $uri      = 'puppet://modules/nginx'
   
   package { 'nginx':
     ensure => present,
@@ -18,8 +39,8 @@ class nginx {
   
   File {
   ensure  =>  file,
-  owner   =>  'root',
-  group   =>  'root',
+  owner   =>  $owner,
+  group   =>  $group,
   }
   
   file { $docroot:
@@ -27,13 +48,18 @@ class nginx {
   }
   
   file { 'index.html':
-    path   => '/var/www/index.html',
-    source => "${uri}/index.html",
+    path   => "${docroot}/index.html",
+    content => epp('nginx/index.html.epp'),
   }
   
   file { 'nginx.conf':
     path   => "${confdir}/nginx.conf",
-    source => "{$uri}/nginx.conf",
+    content => epp('nginx/nginx.conf.epp', {
+      confdir   =>  $confdir,
+      blockdir  =>  $blockdir,
+      logdir    =>  $logdir,
+      user      =>  $user,
+    }),
   }
   
   file { 'default.conf':
