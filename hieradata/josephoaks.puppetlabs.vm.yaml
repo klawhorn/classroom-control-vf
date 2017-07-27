@@ -1,2 +1,3 @@
 ---
 message: Arggg!
+nginx::docroot: /var/www/joe
