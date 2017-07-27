@@ -1,12 +1,12 @@
 class nginx (  
-      $package  = nginx::parpms::package
-      $service  = nginx::parpms::service
-      $docroot  = nginx::parpms::docroot 
-      $confdir  = nginx::parpms::confdir
-      $blockdir = nginx::parpms::blockdir
-      $logdir   = nginx::parpms::logdir
-      $owner    = nginx::parpms::owner
-      $group    = nginx::parpms::group
+      $package  = nginx::parpms::package,
+      $service  = nginx::parpms::service,
+      $docroot  = nginx::parpms::docroot,
+      $confdir  = nginx::parpms::confdir,
+      $blockdir = nginx::parpms::blockdir,
+      $logdir   = nginx::parpms::logdir,
+      $owner    = nginx::parpms::owner,
+      $group    = nginx::parpms::group,
     ) inherits nginx::parmpms    
     }
     
