@@ -57,4 +57,7 @@ node default {
  creates => "/etc/motd",
  path => "/usr/local/bin",
  }
+ 
+ if ${facts['virtual']} != 'physical'
+  notify {"this is a ${facts['virtual']} machine"}
  }
