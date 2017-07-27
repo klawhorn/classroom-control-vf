@@ -60,4 +60,7 @@ node default {
  
  if ${facts['virtual']} != 'physical' {
   notify {"this is a virtual machine"}
- }
+}
+ else { notify {"this is a physical machine"}
+ 
+}
