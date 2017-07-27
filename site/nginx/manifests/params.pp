@@ -1,5 +1,5 @@
 class nginx::params {
-  case $facts['os']['family'] ? {
+  case $facts['os']['family'] {
     'redhat' , 'debian': {
       $package  = 'nginx'
       $service  = 'nginx'
